@@ -14,7 +14,7 @@ html = requests.get(url, cookies=cookies).text
 
 # 获取正文
 parser = HTMLParser(html).css_first('div#article')
-div_article = parser.html[85:][:-6] if parser else "<p>没有找到正文</p>"
+div_article = parser.html[85:-6] if parser else "<p>没有找到正文</p>"
 
 # 保存正文
 with open("index.html", "w", encoding="utf-8") as f:
