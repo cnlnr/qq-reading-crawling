@@ -13,10 +13,9 @@ cookies = {cookie['name']: cookie['value'] for cookie in storage['cookies']}
 html = requests.get(url, cookies=cookies).text
 
 # 获取正文
-parser = HTMLParser(html)
-div_article = parser.css_first('div#article')
-div_article_html = div_article.html[85:][:-6] if div_article else "<p>没有找到正文</p>"
+parser = HTMLParser(html).css_first('div#article')
+div_article = parser.html[85:][:-6] if parser else "<p>没有找到正文</p>"
 
 # 保存正文
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(div_article_html)
+    f.write(div_article)
