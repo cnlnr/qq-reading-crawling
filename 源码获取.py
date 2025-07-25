@@ -1,22 +1,28 @@
+from selectolax.parser import HTMLParser
 import requests
 import json
-from selectolax.parser import HTMLParser
 
 url = "https://book.qq.com/book-read/34895175/51"
 
-# 加载缓存数据
+# 加载cookie
 with open("browser_cache.json", "r", encoding="utf-8") as f:
     storage = json.load(f)
 cookies = {cookie['name']: cookie['value'] for cookie in storage['cookies']}
 
-# 获取源码
+# 获取页面
 html = requests.get(url, cookies=cookies).text
-
-# 获取正文（保留HTML标签）
 parser = HTMLParser(html)
-div_article = parser.css_first('div#article')
-div_article_html = div_article.html if div_article else "<p>没有找到正文</p>"
 
-# 保存正文
+# 获取div#article内部内容
+div_article = parser.css_first('div#article')
+if div_article:
+    inner_html = ""
+    for node in div_article.iter(include_text=True):
+        if node != div_article:
+            inner_html += node.html
+else:
+    inner_html = ""
+
+# 保存结果
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(div_article_html)
+    f.write(inner_html)
