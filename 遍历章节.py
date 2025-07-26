@@ -16,16 +16,29 @@ def crawl_with_step(start_chapter, book_id, step, offset=0):
         if is_finished == False:
             print(f"线程{offset}爬取完成")
             break
-        print(f"线程{offset}: 第{chapter_id}章完成")
+        print(f"线程{offset}: 第{chapter_id}章完成", end='\r')
         chapter_id += step
 
+
+def start_crawling_threads(start_chapter, book_id, concurrent_count):
+    """
+    创建指定数量的线程，分别以指定并发次数作为步长爬取章节
+    
+    Args:
+        start_chapter: 起始章节
+        book_id: 书籍ID
+        concurrent_count: 同时并发次数，默认为2
+    """
+    threads = []
+    # 创建指定数量的线程，以并发次数作为步长爬取
+    for i in range(concurrent_count):
+        thread = threading.Thread(target=crawl_with_step, args=(start_chapter, book_id, concurrent_count, i))
+        threads.append(thread)
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
+
 if __name__ == "__main__":
-    # 创建两个线程，分别以步长2爬取
-    t1 = threading.Thread(target=crawl_with_step, args=(60, 34895175, 2, 0))  # 爬取 60, 62, 64...
-    t2 = threading.Thread(target=crawl_with_step, args=(60, 34895175, 2, 1))  # 爬取 61, 63, 65...
-    
-    t1.start()
-    t2.start()
-    
-    t1.join()
-    t2.join()
+    start_crawling_threads(60, 34895175, 2)
+    print("所有线程爬取完成")
