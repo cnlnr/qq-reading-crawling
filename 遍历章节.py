@@ -1,8 +1,6 @@
 import 章节获取
 
-def crawl_chapters():
-    chapter_id = 60
-    book_id = 34895175
+def crawl_chapters(chapter_id, book_id):
 
     while True:
         is_finished = 章节获取.crawl_chapter(chapter_id, book_id)
@@ -15,4 +13,4 @@ def crawl_chapters():
         chapter_id += 1
 
 if __name__ == "__main__":
-    crawl_chapters()
+    crawl_chapters(60, 34895175)
