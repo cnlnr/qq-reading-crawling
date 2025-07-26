@@ -2,12 +2,13 @@ import requests, json
 from selectolax.parser import HTMLParser
 from pathlib import Path
 
-book_id = "34895175"
-parser = HTMLParser(requests.get(f"https://book.qq.com/book-read/{book_id}/51", cookies={c['name']: c['value'] for c in json.load(open("cookies.json", encoding="utf-8"))['cookies']}).text)
+cid = 51
+bid = "34895175"
+parser = HTMLParser(requests.get(f"https://book.qq.com/book-read/{bid}/{cid}", cookies={c['name']: c['value'] for c in json.load(open("cookies.json", encoding="utf-8"))['cookies']}).text)
 
 # 获取书名并创建目录
 book_name = parser.css_first('a.book-title').text()
-book_path = Path("dataset", f"{book_name}_{book_id}")
+book_path = Path("dataset", f"{book_name}_{bid}")
 book_path.mkdir(parents=True, exist_ok=True)
 
 # 获取章节名
