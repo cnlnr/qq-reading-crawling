@@ -16,8 +16,3 @@ chapter_name = parser.css_first('meta[name="keywords"]').attributes.get('content
 
 # 获取正文并保存
 open(book_path/f"{chapter_name}.html", "w", encoding="utf-8").write(parser.css_first('div#article').html[85:-6])
-
-# 检查是否全书完
-div_book_end = parser.css_first('div.book-end.ypc-column-name')
-if div_book_end:
-    print("全书完")
