@@ -1,7 +1,6 @@
 import requests, json
 from selectolax.parser import HTMLParser
 from pathlib import Path
-import json
 
 def crawl_chapter(cid: int, bid: int) -> bool:
     """获取QQ阅读章节内容
