@@ -1,5 +1,4 @@
 from playwright.sync_api import sync_playwright
-import time
 
 with sync_playwright() as p:
     browser = p.firefox.launch(headless=False)
@@ -8,4 +7,4 @@ with sync_playwright() as p:
     page.goto("https://book.qq.com/")
     page.click('p.unlogin.ypc-link')
     input("登录完成后按回车继续...")
-    context.storage_state(path="browser_cache.json")
+    context.storage_state(path="cookies.json")
