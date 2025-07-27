@@ -14,4 +14,4 @@ pip install requests playwright selectolax
 
 自己研究
 
-提示：数据保存位置在 `./dataset/书名` 目录下。
+提示：`book_id` 可在 URL 中找到。
