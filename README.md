@@ -14,4 +14,4 @@ pip install requests playwright selectolax
 
 自己研究
 
-提示：`book_id` 可在 URL 中找到。
+提示：书籍ID 可在 URL 中找到。`book_id`
