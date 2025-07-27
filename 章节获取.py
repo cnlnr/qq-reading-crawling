@@ -1,6 +1,7 @@
 import requests, json
 from selectolax.parser import HTMLParser
 from pathlib import Path
+import re
 
 def crawl_chapter(cid: int, bid: int) -> bool:
     """获取QQ阅读章节内容
@@ -21,9 +22,8 @@ def crawl_chapter(cid: int, bid: int) -> bool:
     book_path.mkdir(parents=True, exist_ok=True)
 
     # 获取章节名
-    chapter_name = parser.css_first('meta[name="keywords"]').attributes.get('content')[len(book_name)+1:]
-
-    # 获取正文并保存
+    book_name = re.sub(r'[<>"/\\|:*?]', '_', parser.css_first('a.book-title').text())
+    chapter_name = re.sub(r'[<>"/\\|:*?]', '_', parser.css_first('meta[name="keywords"]').attributes.get('content')[len(parser.css_first('a.book-title').text())+1:])
     open(book_path/f"{cid}_{chapter_name}.html", "w", encoding="utf-8").write(parser.css_first('div#article').html[85:-6])
 
     # 检查是否是最后一章
@@ -32,4 +32,4 @@ def crawl_chapter(cid: int, bid: int) -> bool:
         return False
 
 if __name__ == "__main__":
-    crawl_chapter(60, 34895175)
+    crawl_chapter(15, 27612417)
