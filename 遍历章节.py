@@ -15,5 +15,5 @@ def crawl_chapters(book_id):
 
 
 if __name__ == "__main__":
-    crawl_chapters(34895175)
-    print("遍历完成")
+    crawl_chapters(53748923)
+    print("\r\033[K遍历完成")
