@@ -3,8 +3,7 @@
 ## 依赖
 
 ```shell
-pip install requests playwright selectolax &&\
-python -m playwright install
+pip install requests playwright selectolax && python -m playwright install
 ```
 
 ## 初始化
