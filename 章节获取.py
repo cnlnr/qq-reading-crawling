@@ -1,4 +1,5 @@
 import requests, json
+from pathlib import Path
 
 # 获取指定章节
 def read(bid, cid, cookies):
@@ -19,12 +20,20 @@ def cookies(json_path):
 
 # 遍历章节
 def traverse_chapters(bid, cookies):
+    # 获取书名和总章节数
     book_title, totalChapters = detail(bid, cookies)
-    for cid in range(1, totalChapters + 1):
-        title, content = read(bid, cid, cookies)
-        return title, content
-        
-if __name__ == "__main__":
-    bid = 656352
     # 遍历章节
-    traverse_chapters(bid, cookies('cookies.json'))
+    for cid in range(1, totalChapters + 1):
+        # 获取章节标题和内容
+        title, content = read(bid, cid, cookies)
+        # 保存正文
+        book_path = Path(f"dataset/{book_title}_{bid}")
+        book_path.mkdir(parents=True, exist_ok=True)
+        # 保存文件
+        Path(f"{book_path}/{cid}_{title}.html").write_text(content, encoding='utf-8')
+        print(f'{cid} {title}', end='\r')
+
+
+if __name__ == "__main__":
+    traverse_chapters(656352, cookies('cookies.json'))
+    print('完成')
