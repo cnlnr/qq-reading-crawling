@@ -17,3 +17,14 @@ def detail(bid, cookies):
 def cookies(json_path):
     return {c['name']: c['value'] for c in json.load(open(json_path))['cookies']}
 
+# 遍历章节
+def traverse_chapters(bid, cookies):
+    book_title, totalChapters = detail(bid, cookies)
+    for cid in range(1, totalChapters + 1):
+        title, content = read(bid, cid, cookies)
+        return title, content
+        
+if __name__ == "__main__":
+    bid = 656352
+    # 遍历章节
+    traverse_chapters(bid, cookies('cookies.json'))
