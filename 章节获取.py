@@ -26,12 +26,22 @@ def traverse_chapters(bid, cookies):
     for cid in range(1, totalChapters + 1):
         # 获取章节标题和内容
         title, content = read(bid, cid, cookies)
+        # 处理非法文件名
+        def sanitize_filename(name):
+            # 移除文件名中不允许的字符
+            invalid_chars = '<>:"/\\|?*'
+            for char in invalid_chars:
+                name = name.replace(char, '')
+            return name.strip()
+
+        safe_book_title = sanitize_filename(book_title)
+        safe_title = sanitize_filename(title)
         # 保存正文
-        book_path = Path(f"dataset/{book_title}_{bid}")
+        book_path = Path(f"dataset/{safe_book_title}_{bid}")
         book_path.mkdir(parents=True, exist_ok=True)
         # 保存文件
-        Path(f"{book_path}/{cid}_{title}.html").write_text(content, encoding='utf-8')
-        print(f'{cid} {title}', end='\r')
+        Path(f"{book_path}/{cid}_{safe_title}.html").write_text(content, encoding='utf-8')
+        print(f'{cid} {safe_title}', end='\r')
 
 
 if __name__ == "__main__":
