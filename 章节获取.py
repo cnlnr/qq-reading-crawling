@@ -49,5 +49,5 @@ def traverse_chapters\
 
 
 if __name__ == "__main__":
-    traverse_chapters(656352, cookies('cookies.json'))
+    traverse_chapters(29974629, cookies('cookies.json'))
     print('完成')
