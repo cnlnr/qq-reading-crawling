@@ -45,9 +45,9 @@ def traverse_chapters\
         book_path.mkdir(parents=True, exist_ok=True)
         # 保存文件
         Path(f"{book_path}/{cid}_{safe_title}.html").write_text(content, encoding='utf-8')
-        print(f'{cid} {safe_title}', end='\r')
+        print(f'\r\033[K{cid} {safe_title}', end='')
 
 
 if __name__ == "__main__":
     traverse_chapters(29974629, cookies('cookies.json'))
-    print('完成')
+    print('\r\033[K完成')
