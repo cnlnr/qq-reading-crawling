@@ -21,6 +21,6 @@ https://gitee.com/LZY4/xiaoyi
 
 ### 提示
 
-- 书籍ID 可在 URL 中找到 `book_id`
+- 书籍ID 可在 URL 中找到 `bid`
 
 - 创世中文网的账号跟QQ阅读是互通的
