@@ -12,7 +12,12 @@ pip install requests playwright selectolax && python -m playwright install
 
 ## 使用方法
 
-自己研究
+需要下载编译器编译
+
+https://gitee.com/LZY4/xiaoyi
+
+也可在 `build` 目录直接使用
+
 
 ### 提示
 

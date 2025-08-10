@@ -1,0 +1,63 @@
+导入 requests, json
+从 pathlib 导入 Path
+
+# 获取指定章节
+标题_内容:
+    (bid, cid, cookies)
+    阅读_数据 = requests.get(f'https://ubook.reader.qq.com/api/book/read?bid={bid}&cid={cid}', cookies=cookies).json()['data']
+    标题 = 阅读_数据.get('title')
+    内容 = 阅读_数据.get('content')
+    返回 标题, 内容
+
+
+
+# 获取书名和总章节数
+详细:
+    (bid, cookies)
+    详细 = requests.get(f'https://ubook.reader.qq.com/api/book/detail?bid={bid}', cookies=cookies).json()['data']['book']
+    书名 = 详细['title']
+    总章节数 = 详细['totalChapters']
+    返回 书名, 总章节数
+
+cookies:
+    (json_path)
+    返回 {c['name']: c['value'] for c in json.load(open(json_path))['cookies']}
+
+
+
+
+
+遍历章节:
+    (bid, cookies)
+    # 获取书名和总章节数
+    书名, 总章节数 = 详细(bid, cookies)
+    # 遍历章节
+    为 cid 在 范围(1, 总章节数 + 1):
+        # 获取章节标题和内容
+        标题, 内容 = 标题_内容(bid, cid, cookies)
+        # 处理非法文件名
+        过滤文件名:
+            (名字)
+            # 移除文件名中不允许的字符
+            非法字符 = '<>:"/\\|?*'
+            为 字符 在 非法字符:
+                名字 = 名字.替换(字符, '')
+            返回 名字.strip()
+
+        文件名_书名 = 过滤文件名(书名)
+        文件名_标题 = 过滤文件名(标题)
+        # 保存正文
+        书_路径 = Path(f"dataset/{文件名_书名}_{bid}")
+        书_路径.mkdir(parents=真, exist_ok=真)
+        # 保存文件
+        Path(f"{书_路径}/{cid}_{文件名_标题}.html").write_text(内容, encoding='utf-8')
+        打印(f'\r\033[K{cid} {文件名_标题}', end='')
+
+
+
+
+
+
+若 __name__ == "__main__":
+    遍历章节(38128522, cookies('cookies.json'))
+    打印('\r\033[K完成')
