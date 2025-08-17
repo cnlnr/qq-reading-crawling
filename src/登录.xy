@@ -6,3 +6,5 @@ with sync_playwright() as p:
     page.goto("https://book.qq.com/user-center")
     输入("登录完成后按回车继续...")
     context.storage_state(path="cookies.json")
+
+打印()
