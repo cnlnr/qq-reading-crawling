@@ -34,8 +34,8 @@ def 遍历章节(bid, cookies):
         # 处理非法文件名
         def 过滤文件名(名字):
             # 移除文件名中不允许的字符
-            not法字符 = '<>:"/\\|?*'
-            for 字符 in not法字符:
+            非法字符 = '<>:"/\\|?*'
+            for 字符 in 非法字符:
                 名字 = 名字.replace(字符, '')
             return 名字.strip()
 
@@ -56,3 +56,4 @@ def 遍历章节(bid, cookies):
 if __name__ == "__main__":
     遍历章节(38128522, cookies('cookies.json'))
     print('\r\033[K完成')
+
